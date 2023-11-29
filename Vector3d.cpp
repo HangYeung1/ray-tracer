@@ -114,6 +114,13 @@ Vector3d & Vector3d::operator/=(double scalar) {
   return *this *= (1 / scalar);
 }
 
+// EFFECTS:  Scale this element-wise by scalar
+//           Return new vector
+// NOTE:     This enables communicativity
+Vector3d operator*(double scalar, const Vector3d vec) {
+  return vec * scalar;
+}
+
 // EFFECTS:  Return true if lhs == rhs element-wise
 bool operator==(const Vector3d &lhs, const Vector3d &rhs) {
   return lhs.x() == rhs.x() && lhs.y() == rhs.y() && lhs.z() == rhs.z();

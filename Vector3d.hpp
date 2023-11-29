@@ -80,6 +80,11 @@ class Vector3d {
 // Alias for geometric clarity
 using Point3d = Vector3d;
 
+// EFFECTS:  Scale this element-wise by scalar
+//           Return new vector
+// NOTE:     This enables communicativity
+Vector3d operator*(double scalar, const Vector3d vec);
+
 // EFFECTS:  Return true if lhs == rhs element-wise
 bool operator==(const Vector3d &lhs, const Vector3d &rhs);
 
