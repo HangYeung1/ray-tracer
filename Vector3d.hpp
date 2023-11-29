@@ -3,9 +3,6 @@
 
 #include <iostream>
 
-// Alias for geometric clarity
-using Point3d = Vector3d;
-
 class Vector3d {
  public:
   // EFFECTS:  Initalize vector to 0
@@ -77,6 +74,9 @@ class Vector3d {
  private:
   double e[3];
 };
+
+// Alias for geometric clarity
+using Point3d = Vector3d;
 
 // EFFECTS:  Return true if lhs == rhs element-wise
 bool operator==(const Vector3d &lhs, const Vector3d &rhs);

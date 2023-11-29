@@ -5,11 +5,11 @@
 
 // EFFECTS:  Initalize vector to 0
 Vector3d::Vector3d()
-  : e({0, 0, 0}) { }
+  : Vector3d(0, 0, 0) { }
 
 // EFFECTS:  Initalize vector to specified x, y, z
 Vector3d::Vector3d(double x, double y, double z)
-  : e({x, y, z}) { }
+  : e{x, y, z} { }
 
 // EFFECTS:  Return x element
 double Vector3d::x() const {
@@ -121,7 +121,7 @@ bool operator!=(const Vector3d &lhs, const Vector3d &rhs) {
 // EFFECTS:  Print vec element-wise to os
 // EXAMPLE:  Vector3d(1, 2, 3) -> "1 2 3"
 std::ostream& operator<<(std::ostream &os, const Vector3d &vec) {
-  os << vec.x() << ' ' << vec.y() << ' ' << vec.z();
+  return os << vec.x() << ' ' << vec.y() << ' ' << vec.z();
 }
 
 // EFFECTS:  Return u dot v
