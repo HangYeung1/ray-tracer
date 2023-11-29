@@ -5,8 +5,8 @@ CXXFLAGS ?= -Wall -Werror -pedantic -g --std=c++17 -Wno-sign-compare -Wno-commen
 CXXFLAGS += -fsanitize=address -fsanitize=undefined -D_GLIBCXX_DEBUG
 
 # Compile the main executable
-main.exe: main.cpp
-	$(CXX) $(CXXFLAGS) main.cpp -o main.exe
+main.exe: Vector3d.cpp Color.cpp main.cpp
+	$(CXX) $(CXXFLAGS) $^ -o $@
 
 # Remove automatically generated files
 clean :

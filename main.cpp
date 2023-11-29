@@ -1,3 +1,6 @@
+#include "Color.hpp"
+#include "Vector3d.hpp"
+
 #include <iostream>
 
 int main() {
@@ -18,17 +21,14 @@ int main() {
     
     for(int i = 0; i < image_width; ++i) {
       // Calculate rgb real values
-      double r = static_cast<double>(j) / (image_width - 1);
-      double g = static_cast<double>(i) / (image_height - 1);
-      double b = 0;
-
-      // Scale rgb to integer value
-      int ir = 255.999 * r;
-      int ig = 255.999 * g;
-      int ib = 255.999 * b;
+      Color color(static_cast<double>(j) / (image_width - 1),
+                  static_cast<double>(i) / (image_height - 1),
+                  0);
 
       // Render pixel
-      std::cout << ir << ' ' << ig << ' ' << ib << '\n';
+      write_color(std::cout, color);
+      std::cout << '\n';
     }
   }
+  std::clog << "\rDone.                 \n";
 }
