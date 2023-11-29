@@ -35,6 +35,7 @@ class Vector3d {
   //           Return new vector
   Vector3d operator*(double scalar) const;
 
+  // REQUIRES: scalar != 0
   // EFFECTS:  Scale this element-wise by inverse of scalar
   //           Return new vector
   Vector3d operator/(double scalar) const;
@@ -66,6 +67,7 @@ class Vector3d {
   //           Return reference to self 
   Vector3d & operator*=(double scalar);
 
+  // REQUIRES: scalar != 0
   // MODIFIES: e
   // EFFECTS:  Scale this element-wise by inverse of scalar
   //           Return reference to self 

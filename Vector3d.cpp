@@ -1,5 +1,6 @@
 #include "Vector3d.hpp"
 
+#include <cassert>
 #include <cmath>
 #include <iostream>
 
@@ -49,9 +50,11 @@ Vector3d Vector3d::operator*(double scalar) const {
   return Vector3d(e[0] * scalar, e[1] * scalar, e[2] * scalar);
 }
 
+// REQUIRES: scalar != 0
 // EFFECTS:  Scale this element-wise by inverse of scalar
 //           Return new vector
 Vector3d Vector3d::operator/(double scalar) const {
+  assert(scalar != 0);
   return *this * (1 / scalar);
 }
 
@@ -63,6 +66,7 @@ Vector3d Vector3d::operator-() const {
 // REQUIRES: 0 <= i <= 2
 // EFFECTS:  Return ith element
 double Vector3d::operator[](int i) const {
+  assert(i >= 0 && i <= 2);
   return e[i];
 }
 
@@ -70,6 +74,7 @@ double Vector3d::operator[](int i) const {
 // MODIFIES: e
 // EFFECTS:  Return reference ith element
 double & Vector3d::operator[](int i) {
+  assert(i >= 0 && i <= 2);
   return e[i];
 }
 
@@ -100,10 +105,12 @@ Vector3d & Vector3d::operator*=(double scalar) {
   return *this;
 }
 
+// REQUIRES: scalar != 0
 // MODIFIES: e
 // EFFECTS:  Scale this element-wise by inverse of scalar
 //           Return reference to self 
 Vector3d & Vector3d::operator/=(double scalar) {
+  assert(scalar != 0);
   return *this *= (1 / scalar);
 }
 
