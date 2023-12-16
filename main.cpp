@@ -4,7 +4,19 @@
 #include "Ray.hpp"
 #include "Vector3d.hpp"
 
-Color ray_color(const Ray& r) {
+bool hit_sphere(const Point3d &center, const double radius, const Ray &r) {
+  const Vector3d oc = r.origin() - center;
+  const double a = dot(r.direction(), r.direction());
+  const double b = dot(2.0 * r.direction(), oc);
+  const double c = dot(oc, oc) - radius * radius;
+  const double discriminant = b * b - 4 * a * c;
+  return discriminant >= 0;
+}
+
+Color ray_color(const Ray &r) {
+  if (hit_sphere(Point3d(0, 0, -1), 0.5, r)) {
+    return Color(1, 0, 0);
+  }
   const Vector3d unit_direction = unit_vector(r.direction());
   const double a = 0.5 * (unit_direction.y() + 1.0);
   return (1.0 - a) * Color(1.0, 1.0, 1.0) + a * Color(0.5, 0.7, 1.0);
@@ -43,7 +55,7 @@ int main() {
   for (int j = 0; j < image_height; ++j) {
     std::clog << "\rScanlines remaining: " << (image_height - j) 
               << ' ' << std::flush;
-    for(int i = 0; i < image_width; ++i) {
+    for (int i = 0; i < image_width; ++i) {
       const Point3d pixel_center = pixel00_location 
                                  + (i * pixel_delta_u) 
                                  + (j * pixel_delta_v);
