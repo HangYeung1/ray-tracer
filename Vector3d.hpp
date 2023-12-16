@@ -23,6 +23,9 @@ class Vector3d {
   // EFFECTS:  Return magnitude of vector
   double length() const;
 
+  // EFFECTS:  Return squared magnitude of vector
+  double length_squared() const;
+
   // EFFECTS:  Add other to this element-wise
   //           Return new vector
   Vector3d operator+(const Vector3d &other) const;

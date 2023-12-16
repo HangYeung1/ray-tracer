@@ -18,6 +18,6 @@ Vector3d Ray::direction() const {
 }
 
 // EFFECTS:  Return ray linear interpolation at t
-Point3d Ray::at(double t) {
+Point3d Ray::at(double t) const {
   return orig + t * dir;
 }

@@ -1,21 +1,29 @@
+#include <cmath>
 #include <iostream>
 
 #include "Color.hpp"
 #include "Ray.hpp"
 #include "Vector3d.hpp"
 
-bool hit_sphere(const Point3d &center, const double radius, const Ray &r) {
+double hit_sphere(const Point3d &center, const double radius, const Ray &r) {
   const Vector3d oc = r.origin() - center;
-  const double a = dot(r.direction(), r.direction());
-  const double b = dot(2.0 * r.direction(), oc);
-  const double c = dot(oc, oc) - radius * radius;
-  const double discriminant = b * b - 4 * a * c;
-  return discriminant >= 0;
+  const double a = r.direction().length_squared();
+  const double half_b = dot(r.direction(), oc);
+  const double c = oc.length_squared() - radius * radius;
+  const double discriminant = half_b * half_b - a * c;
+
+  if(discriminant < 0) {
+    return -1.0;
+  } else {
+    return (-half_b + std::sqrt(discriminant)) / a;
+  }
 }
 
 Color ray_color(const Ray &r) {
-  if (hit_sphere(Point3d(0, 0, -1), 0.5, r)) {
-    return Color(1, 0, 0);
+  const double t = hit_sphere(Point3d(0, 0, -1), 0.5, r);
+  if (t > 0.0) {
+    const Vector3d N = unit_vector(r.at(t) - Vector3d(0, 0, -1));
+    return 0.5 * Color(N.x() + 1, N.y() + 1, N.z() + 1);
   }
   const Vector3d unit_direction = unit_vector(r.direction());
   const double a = 0.5 * (unit_direction.y() + 1.0);

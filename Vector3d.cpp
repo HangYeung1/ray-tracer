@@ -29,7 +29,12 @@ double Vector3d::z() const {
 
 // EFFECTS:  Return magnitude of vector
 double Vector3d::length() const {
-  return sqrt(pow(e[0], 2) + pow(e[1], 2) + pow(e[2], 2));
+  return sqrt(length_squared());
+}
+
+// EFFECTS:  Return squared magnitude of vector
+double Vector3d::length_squared() const {
+  return pow(e[0], 2) + pow(e[1], 2) + pow(e[2], 2);
 }
 
 // EFFECTS:  Add other to this element-wise

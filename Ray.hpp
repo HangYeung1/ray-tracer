@@ -18,7 +18,7 @@ class Ray {
   Vector3d direction() const;
 
   // EFFECTS:  Return ray linear interpolation at t
-  Point3d at(double t);
+  Point3d at(double t) const;
 
  private:
   Point3d orig;
