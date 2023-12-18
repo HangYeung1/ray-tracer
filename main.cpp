@@ -19,22 +19,22 @@ double hit_sphere(const Point3d &center, const double radius, const Ray &r) {
   }
 }
 
-Color ray_color(const Ray &r) {
-  const double t = hit_sphere(Point3d(0, 0, -1), 0.5, r);
+Color ray_color(const Ray &ray) {
+  const double t = hit_sphere(Point3d(0, 0, -1), 0.5, ray);
   if (t > 0.0) {
-    const Vector3d N = unit_vector(r.at(t) - Vector3d(0, 0, -1));
+    const Vector3d N = unit_vector(ray.at(t) - Vector3d(0, 0, -1));
     return 0.5 * Color(N.x() + 1, N.y() + 1, N.z() + 1);
   }
-  const Vector3d unit_direction = unit_vector(r.direction());
+  const Vector3d unit_direction = unit_vector(ray.direction());
   const double a = 0.5 * (unit_direction.y() + 1.0);
   return (1.0 - a) * Color(1.0, 1.0, 1.0) + a * Color(0.5, 0.7, 1.0);
 }
 
 int main() {
   // Image setup
-  const double apsect_ratio = 16.0 / 9.0;
+  const double aspect_ratio = 16.0 / 9.0;
   const int image_width = 400;
-  const int temp_height = image_width / apsect_ratio;
+  const int temp_height = image_width / aspect_ratio;
   const int image_height = (temp_height < 1) ? 1 : temp_height;
 
   // Camera setup
@@ -68,9 +68,9 @@ int main() {
                                  + (i * pixel_delta_u) 
                                  + (j * pixel_delta_v);
       const Vector3d ray_direction = pixel_center - camera_center;
-      const Ray r(camera_center, ray_direction);
+      const Ray ray(camera_center, ray_direction);
 
-      Color pixel_color = ray_color(r);
+      Color pixel_color = ray_color(ray);
       write_color(std::cout, pixel_color);
     }
   }

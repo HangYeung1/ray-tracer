@@ -27,14 +27,24 @@ double Vector3d::z() const {
   return e[2];
 }
 
-// EFFECTS:  Return magnitude of vector
-double Vector3d::length() const {
-  return sqrt(length_squared());
+// EFFECTS:  Return negative element-wise vector
+Vector3d Vector3d::operator-() const {
+  return Vector3d(-e[0], -e[1], -e[2]);
 }
 
-// EFFECTS:  Return squared magnitude of vector
-double Vector3d::length_squared() const {
-  return pow(e[0], 2) + pow(e[1], 2) + pow(e[2], 2);
+// REQUIRES: 0 <= i <= 2
+// EFFECTS:  Return ith element
+double Vector3d::operator[](int i) const {
+  assert(i >= 0 && i <= 2);
+  return e[i];
+}
+
+// REQUIRES: 0 <= i <= 2
+// MODIFIES: e
+// EFFECTS:  Return reference ith element
+double & Vector3d::operator[](int i) {
+  assert(i >= 0 && i <= 2);
+  return e[i];
 }
 
 // EFFECTS:  Add other to this element-wise
@@ -61,26 +71,6 @@ Vector3d Vector3d::operator*(double scalar) const {
 Vector3d Vector3d::operator/(double scalar) const {
   assert(scalar != 0);
   return *this * (1 / scalar);
-}
-
-// EFFECTS:  Return negative element-wise vector
-Vector3d Vector3d::operator-() const {
-  return Vector3d(-e[0], -e[1], -e[2]);
-}
-
-// REQUIRES: 0 <= i <= 2
-// EFFECTS:  Return ith element
-double Vector3d::operator[](int i) const {
-  assert(i >= 0 && i <= 2);
-  return e[i];
-}
-
-// REQUIRES: 0 <= i <= 2
-// MODIFIES: e
-// EFFECTS:  Return reference ith element
-double & Vector3d::operator[](int i) {
-  assert(i >= 0 && i <= 2);
-  return e[i];
 }
 
 // MODIFIES: e
@@ -117,6 +107,16 @@ Vector3d & Vector3d::operator*=(double scalar) {
 Vector3d & Vector3d::operator/=(double scalar) {
   assert(scalar != 0);
   return *this *= (1 / scalar);
+}
+
+// EFFECTS:  Return magnitude of vector
+double Vector3d::length() const {
+  return sqrt(length_squared());
+}
+
+// EFFECTS:  Return squared magnitude of vector
+double Vector3d::length_squared() const {
+  return pow(e[0], 2) + pow(e[1], 2) + pow(e[2], 2);
 }
 
 // EFFECTS:  Scale this element-wise by scalar

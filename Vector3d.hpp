@@ -20,11 +20,17 @@ class Vector3d {
   // EFFECTS:  Return z element
   double z() const;
 
-  // EFFECTS:  Return magnitude of vector
-  double length() const;
+  // EFFECTS:  Return negative element-wise vector
+  Vector3d operator-() const;
 
-  // EFFECTS:  Return squared magnitude of vector
-  double length_squared() const;
+  // REQUIRES: 0 <= i <= 2
+  // EFFECTS:  Return ith element
+  double operator[](int i) const;
+
+  // REQUIRES: 0 <= i <= 2
+  // MODIFIES: e
+  // EFFECTS:  Return reference ith element
+  double & operator[](int i);
 
   // EFFECTS:  Add other to this element-wise
   //           Return new vector
@@ -42,18 +48,6 @@ class Vector3d {
   // EFFECTS:  Scale this element-wise by inverse of scalar
   //           Return new vector
   Vector3d operator/(double scalar) const;
-
-  // EFFECTS:  Return negative element-wise vector
-  Vector3d operator-() const;
-
-  // REQUIRES: 0 <= i <= 2
-  // EFFECTS:  Return ith element
-  double operator[](int i) const;
-
-  // REQUIRES: 0 <= i <= 2
-  // MODIFIES: e
-  // EFFECTS:  Return reference ith element
-  double & operator[](int i);
 
   // MODIFIES: e
   // EFFECTS:  Add other to this element-wise
@@ -75,6 +69,12 @@ class Vector3d {
   // EFFECTS:  Scale this element-wise by inverse of scalar
   //           Return reference to self 
   Vector3d & operator/=(double scalar);
+
+  // EFFECTS:  Return magnitude of vector
+  double length() const;
+
+  // EFFECTS:  Return squared magnitude of vector
+  double length_squared() const;
 
  private:
   double e[3];

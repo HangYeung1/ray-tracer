@@ -1,7 +1,7 @@
 #include "Ray.hpp"
 
 // EFFECTS:  Initialize ray with 0 origin and 0 direction
-Ray::Ray() { }
+Ray::Ray() = default;
 
 // EFFECTS:  Initialize ray with origin and direction
 Ray::Ray(const Point3d &orig_in, const Vector3d &dir_in)
