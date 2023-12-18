@@ -23,6 +23,9 @@ class Interval {
   // EFFECTS:  Determine if val is within (minimum, maximum)
   bool surrounds(const double val) const;
 
+  // EFFECTS:  Clamp val to [minimum, maximum]
+  double clamp(const double val) const;
+
   static const Interval empty;
   static const Interval universe;
 

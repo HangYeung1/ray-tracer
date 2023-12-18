@@ -6,12 +6,13 @@
 #include "Color.hpp"
 #include "Hittable.hpp"
 #include "Interval.hpp"
+#include "Random.hpp"
 #include "Ray.hpp"
 #include "Vector3d.hpp"
 
 // EFFECTS:  Initalize camera with default aspect ratio and image width
 Camera::Camera()
-  : aspect_ratio(1.0), image_width(100) { }
+  : aspect_ratio(1.0), image_width(100), samples_per_pixel(10) { }
 
 // REQUIRES: aspect_ratio_in > 0
 // MODIFIES: aspect_ratio
@@ -29,6 +30,14 @@ void Camera::set_image_width(const int image_width_in) {
   image_width = image_width_in;
 }
 
+// REQUIRES: samples_per_pixel_in > 0
+// MODIFIES: samples_per_pixel
+// EFFECTS:  Set samples_per_pixel to samples_per_pixel_in
+void Camera::set_samples_per_pixel(const int samples_per_pixel_in) {
+  assert(samples_per_pixel_in > 0);
+  samples_per_pixel = samples_per_pixel_in;
+}
+
 // EFFECTS:  Render world to terminal
 void Camera::render(const Hittable &world) {
   initalize();
@@ -39,17 +48,31 @@ void Camera::render(const Hittable &world) {
     std::clog << "\rScanlines remaining: " << (image_height - j) 
               << ' ' << std::flush;
     for (int i = 0; i < image_width; ++i) {
-      const Point3d pixel_center = pixel00_location 
-                                 + (i * pixel_delta_u) 
-                                 + (j * pixel_delta_v);
-      const Vector3d ray_direction = pixel_center - center;
-      const Ray ray(center, ray_direction);
-
-      Color pixel_color = ray_color(ray, world);
-      write_color(std::cout, pixel_color);
+      Color pixel_color(0, 0, 0);
+      for (int k = 0; k < samples_per_pixel; ++k) {
+        const Ray ray = sample_pixel(i, j);
+        pixel_color += ray_color(ray, world);
+      }
+      write_color(std::cout, pixel_color, samples_per_pixel);
     }
   }
   std::clog << "\rDone.                 \n";
+}
+
+// EFFECTS:  Return random offest in pixel area
+Vector3d Camera::sample_pixel_offest() const {
+  double x_offest = -0.5 + random_double();
+  double y_offest = -0.5 + random_double();
+  return (x_offest * pixel_delta_u) + (y_offest* pixel_delta_v);
+}
+
+// EFFECTS:  Return random ray from camera to pixel
+Ray Camera::sample_pixel(const int i, const int j) const {
+  const Point3d pixel_center = pixel00_location 
+                             + (i * pixel_delta_u) 
+                             + (j * pixel_delta_v);
+  const Point3d sample_point = pixel_center + sample_pixel_offest();
+  return Ray(center, sample_point - center);
 }
 
 // EFFECTS:  Calculate camera parameters from aspect_ratio and image_width

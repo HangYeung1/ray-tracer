@@ -29,6 +29,17 @@ bool Interval::surrounds(const double val) const {
   return (minimum < val) && (val < maximum);
 }
 
+// EFFECTS:  Clamp val to [minimum, maximum]
+double Interval::clamp(const double val) const {
+  if (val < minimum) {
+    return minimum;
+  } else if (val > maximum) {
+    return maximum;
+  } else {
+    return val;
+  }
+}
+
 const Interval Interval::empty(std::numeric_limits<double>::infinity(),
                                -std::numeric_limits<double>::infinity());
 const Interval Interval::universe(-std::numeric_limits<double>::infinity(),

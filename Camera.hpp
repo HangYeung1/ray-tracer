@@ -19,12 +19,18 @@ class Camera {
   // EFFECTS:  Set image_width to image_width_in
   void set_image_width(const int image_width_in);
 
+  // REQUIRES: samples_per_pixel_in > 0
+  // MODIFIES: samples_per_pixel
+  // EFFECTS:  Set samples_per_pixel to samples_per_pixel_in
+  void set_samples_per_pixel(const int samples_per_pixel_in);
+
   // EFFECTS:  Render world to standard terminal
   void render(const Hittable &world);
 
  private:
   double aspect_ratio;
   int image_width;
+  int samples_per_pixel;
 
   int image_height;
   Point3d center;
@@ -34,6 +40,12 @@ class Camera {
 
   // EFFECTS:  Calculate camera parameters from aspect_ratio and image_width
   void initalize();
+  
+  // EFFECTS:  Return random offest in pixel area
+  Vector3d sample_pixel_offest() const;
+
+  // EFFECTS:  Return random ray from camera to pixel
+  Ray sample_pixel(const int i, const int j) const;
 
   // EFFECTS:  Return color of ray
   Color ray_color(const Ray &ray, const Hittable &world) const;
