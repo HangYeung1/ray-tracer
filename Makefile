@@ -5,15 +5,16 @@ CXXFLAGS ?= -Wall -Werror -pedantic -g --std=c++17 -Wno-sign-compare -Wno-commen
 CXXFLAGS += -fsanitize=address -fsanitize=undefined -D_GLIBCXX_DEBUG\
 
 # Define the prequisite files
-UTILITY ?= Color.hpp Interval.cpp
-OBJECTS ?= Vector3d.cpp Ray.cpp Hittable.hpp HittableList.cpp Sphere.cpp
+BASIC ?= Vector3d.cpp Ray.cpp Camera.cpp
+UTILITY ?= Color.cpp Interval.cpp
+OBJECTS ?= Hittable.cpp HittableList.cpp Sphere.cpp
 
 # Render image
 render: main.exe
 	./main.exe > image.ppm
 
 # Compile the main executable
-main.exe: $(UTILITY) $(OBJECTS) main.cpp
+main.exe: $(BASIC) $(UTILITY) $(OBJECTS) main.cpp
 	$(CXX) $(CXXFLAGS) $^ -o $@
 
 # Remove automatically generated files
