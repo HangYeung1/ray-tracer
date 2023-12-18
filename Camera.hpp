@@ -9,6 +9,16 @@ class Camera {
   // EFFECTS:  Initalize camera with default aspect ratio and image width
   Camera();
 
+  // REQUIRES: aspect_ratio_in > 0
+  // MODIFIES: aspect_ratio
+  // EFFECTS:  Set aspect_ratio to aspect_ratio_in
+  void set_aspect_ratio(const double aspect_ratio_in);
+
+  // REQUIRES: image_width_in > 0
+  // MODIFIES: image_width
+  // EFFECTS:  Set image_width to image_width_in
+  void set_image_width(const int image_width_in);
+
   // EFFECTS:  Render world to standard terminal
   void render(const Hittable &world);
 
@@ -21,16 +31,6 @@ class Camera {
   Point3d pixel00_location;
   Vector3d pixel_delta_u;
   Vector3d pixel_delta_v;
-
-  // REQUIRES: aspect_ratio_in > 0
-  // MODIFIES: aspect_ratio
-  // EFFECTS:  Set aspect_ratio to aspect_ratio_in
-  void set_aspect_ratio(const double aspect_ratio_in);
-
-  // REQUIRES: image_width_in > 0
-  // MODIFIES: image_width
-  // EFFECTS:  Set image_width to image_width_in
-  void set_image_width(const int image_width_in);
 
   // EFFECTS:  Calculate camera parameters from aspect_ratio and image_width
   void initalize();

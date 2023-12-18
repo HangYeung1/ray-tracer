@@ -1,8 +1,3 @@
-#include <cmath>
-#include <iostream>
-#include <limits>
-#include <memory>
-
 #include "Camera.hpp"
 #include "HittableList.hpp"
 #include "Sphere.hpp"
@@ -16,5 +11,7 @@ int main() {
 
   // Create camera
   Camera camera;
+  camera.set_aspect_ratio(16.0 / 9.0);
+  camera.set_image_width(400);
   camera.render(world);
 }

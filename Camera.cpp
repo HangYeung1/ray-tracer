@@ -11,7 +11,23 @@
 
 // EFFECTS:  Initalize camera with default aspect ratio and image width
 Camera::Camera()
-  : aspect_ratio(16.0 / 9.0), image_width(400) { }
+  : aspect_ratio(1.0), image_width(100) { }
+
+// REQUIRES: aspect_ratio_in > 0
+// MODIFIES: aspect_ratio
+// EFFECTS:  Set aspect_ratio to aspect_ratio_in
+void Camera::set_aspect_ratio(const double aspect_ratio_in) {
+  assert(aspect_ratio_in > 0);
+  aspect_ratio = aspect_ratio_in;
+}
+
+// REQUIRES: image_width_in > 0
+// MODIFIES: image_width
+// EFFECTS:  Set image_width to image_width_in
+void Camera::set_image_width(const int image_width_in) {
+  assert(image_width_in > 0);
+  image_width = image_width_in;
+}
 
 // EFFECTS:  Render world to terminal
 void Camera::render(const Hittable &world) {
@@ -34,22 +50,6 @@ void Camera::render(const Hittable &world) {
     }
   }
   std::clog << "\rDone.                 \n";
-}
-
-// REQUIRES: aspect_ratio_in > 0
-// MODIFIES: aspect_ratio
-// EFFECTS:  Set aspect_ratio to aspect_ratio_in
-void Camera::set_aspect_ratio(const double aspect_ratio_in) {
-  assert(aspect_ratio_in > 0);
-  aspect_ratio = aspect_ratio_in;
-}
-
-// REQUIRES: image_width_in > 0
-// MODIFIES: image_width
-// EFFECTS:  Set image_width to image_width_in
-void Camera::set_image_width(const int image_width_in) {
-  assert(image_width_in > 0);
-  image_width = image_width_in;
 }
 
 // EFFECTS:  Calculate camera parameters from aspect_ratio and image_width
