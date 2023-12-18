@@ -15,7 +15,7 @@ double hit_sphere(const Point3d &center, const double radius, const Ray &r) {
   if(discriminant < 0) {
     return -1.0;
   } else {
-    return (-half_b + std::sqrt(discriminant)) / a;
+    return (-half_b - std::sqrt(discriminant)) / a;
   }
 }
 
@@ -68,7 +68,7 @@ int main() {
                                  + (i * pixel_delta_u) 
                                  + (j * pixel_delta_v);
       const Vector3d ray_direction = pixel_center - camera_center;
-      const Ray r(pixel_center, ray_direction);
+      const Ray r(camera_center, ray_direction);
 
       Color pixel_color = ray_color(r);
       write_color(std::cout, pixel_color);
