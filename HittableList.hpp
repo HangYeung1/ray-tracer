@@ -5,11 +5,10 @@
 #include <vector>
 
 #include "Hittable.hpp"
+#include "Interval.hpp"
 
 class HittableList : public Hittable {
  public:
-  std::vector<std::shared_ptr<Hittable>> objects;
-
   // EFFECTS:  Initalize empty HittableList
   HittableList();
 
@@ -24,9 +23,12 @@ class HittableList : public Hittable {
   // EFFECTS:  Add given object to objects
   void add(std::shared_ptr<Hittable> object);
 
-  // EFFECTS:  Determine if ray hits any object within (t_min, t_max)
-  bool hit(const Ray &ray, const double t_min, const double t_max, 
+  // EFFECTS:  Determine if ray hits any object within t_interval
+  bool hit(const Ray &ray, const Interval &t_interval, 
            HitRecord &record) const override;
+
+ private:
+  std::vector<std::shared_ptr<Hittable>> objects;
 };
 
 #endif

@@ -6,13 +6,15 @@
 #include "Color.hpp"
 #include "Hittable.hpp"
 #include "HittableList.hpp"
+#include "Interval.hpp"
 #include "Ray.hpp"
 #include "Sphere.hpp"
 #include "Vector3d.hpp"
 
 Color ray_color(const Ray &ray, const HittableList &world) {
   HitRecord record;
-  if(world.hit(ray, 0, std::numeric_limits<double>::infinity(), record)) {
+  if(world.hit(ray, Interval(0, std::numeric_limits<double>::infinity()), 
+               record)) {
     return 0.5 * (record.normal + Color(1, 1, 1));
   }
   const Vector3d unit_direction = unit_vector(ray.direction());

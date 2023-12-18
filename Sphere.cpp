@@ -3,14 +3,15 @@
 #include <cmath>
 
 #include "Hittable.hpp"
+#include "Interval.hpp"
 #include "Vector3d.hpp"
 
 // EFFECTS:  Initalize sphere to specified center and radius
 Sphere::Sphere(const Point3d &center_in, const double radius_in)
   : center(center_in), radius(radius_in) { }
 
-// EFFECTS:  Determine if ray hits this sphere within (t_min, t_max)
-bool Sphere::hit(const Ray &ray, const double t_min, const double t_max, 
+// EFFECTS:  Determine if ray hits this sphere within t-interval
+bool Sphere::hit(const Ray &ray, const Interval &t_interval, 
                  HitRecord &record) const {
   // Calculate discriminant of collision equation
   const Vector3d oc = ray.origin() - center;
@@ -24,12 +25,12 @@ bool Sphere::hit(const Ray &ray, const double t_min, const double t_max,
     return false;
   }
   
-  // Calculate the smallest root that is within the acceptable range
+  // Calculate the smallest root that is within t_interval
   const double discriminant_sqrt = std::sqrt(discriminant);
   double root = (-half_b - discriminant_sqrt) / a;
-  if( root <= t_min || t_max <= root) {
+  if(!t_interval.surrounds(root)) {
     root = (-half_b + discriminant_sqrt) / a;
-    if(root <= t_min || t_max <= root) {
+    if(!t_interval.surrounds(root)) {
       return false;
     }
   }

@@ -1,6 +1,7 @@
 #ifndef HITTABLE_HPP
 #define HITTABLE_HPP
 
+#include "Interval.hpp"
 #include "Ray.hpp"
 
 class HitRecord {
@@ -21,8 +22,8 @@ class HitRecord {
 
 class Hittable {
  public:
-  // EFFECTS:  Determine if ray hits this object within (t_min, t_max)
-  virtual bool hit(const Ray &ray, const double t_min, const double t_max, 
+  // EFFECTS:  Determine if ray hits this object within t_interval
+  virtual bool hit(const Ray &ray, const Interval &t_interval, 
                    HitRecord &record) const = 0;
 };
 

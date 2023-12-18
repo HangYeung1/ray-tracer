@@ -5,7 +5,7 @@ CXXFLAGS ?= -Wall -Werror -pedantic -g --std=c++17 -Wno-sign-compare -Wno-commen
 CXXFLAGS += -fsanitize=address -fsanitize=undefined -D_GLIBCXX_DEBUG\
 
 # Define the prequisite files
-UTILITY ?= Color.hpp
+UTILITY ?= Color.hpp Interval.cpp
 OBJECTS ?= Vector3d.cpp Ray.cpp Hittable.hpp HittableList.cpp Sphere.cpp
 
 # Render image
