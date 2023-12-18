@@ -1,29 +1,19 @@
 #include <cmath>
 #include <iostream>
+#include <limits>
+#include <memory>
 
 #include "Color.hpp"
+#include "Hittable.hpp"
+#include "HittableList.hpp"
 #include "Ray.hpp"
+#include "Sphere.hpp"
 #include "Vector3d.hpp"
 
-double hit_sphere(const Point3d &center, const double radius, const Ray &r) {
-  const Vector3d oc = r.origin() - center;
-  const double a = r.direction().length_squared();
-  const double half_b = dot(r.direction(), oc);
-  const double c = oc.length_squared() - radius * radius;
-  const double discriminant = half_b * half_b - a * c;
-
-  if(discriminant < 0) {
-    return -1.0;
-  } else {
-    return (-half_b - std::sqrt(discriminant)) / a;
-  }
-}
-
-Color ray_color(const Ray &ray) {
-  const double t = hit_sphere(Point3d(0, 0, -1), 0.5, ray);
-  if (t > 0.0) {
-    const Vector3d N = unit_vector(ray.at(t) - Vector3d(0, 0, -1));
-    return 0.5 * Color(N.x() + 1, N.y() + 1, N.z() + 1);
+Color ray_color(const Ray &ray, const HittableList &world) {
+  HitRecord record;
+  if(world.hit(ray, 0, std::numeric_limits<double>::infinity(), record)) {
+    return 0.5 * (record.normal + Color(1, 1, 1));
   }
   const Vector3d unit_direction = unit_vector(ray.direction());
   const double a = 0.5 * (unit_direction.y() + 1.0);
@@ -57,6 +47,11 @@ int main() {
   const Vector3d pixel_offest = 0.5 * (pixel_delta_u + pixel_delta_v);
   const Point3d pixel00_location = viewport_upper_left + pixel_offest;
 
+  // World setup
+  HittableList world;
+  world.add(std::make_shared<Sphere>(Point3d(0, 0, -1), 0.5));
+  world.add(std::make_shared<Sphere>(Point3d(0, -100.5, -1), 100));
+
   // Render image
   std::cout << "P3\n" << image_width << ' ' << image_height << "\n255\n";
 
@@ -70,7 +65,7 @@ int main() {
       const Vector3d ray_direction = pixel_center - camera_center;
       const Ray ray(camera_center, ray_direction);
 
-      Color pixel_color = ray_color(ray);
+      Color pixel_color = ray_color(ray, world);
       write_color(std::cout, pixel_color);
     }
   }
