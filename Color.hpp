@@ -8,6 +8,9 @@
 // Alias for clarity
 using Color = Vector3d;
 
+// EFFECTS:  Convert linear color component to gamma 2 color
+double linear_to_gamma(double linear);
+
 // REQUIRES: samples > 0
 // MODIFIES: os
 // EFFECTS:  Print color converted to 8 bit numbers 
