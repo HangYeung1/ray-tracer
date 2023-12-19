@@ -24,6 +24,11 @@ class Camera {
   // EFFECTS:  Set samples_per_pixel to samples_per_pixel_in
   void set_samples_per_pixel(const int samples_per_pixel_in);
 
+  // REQUIRES: max_depth_in > 0
+  // MODIFIES: max_depth
+  // EFFECTS:  Set max_depth to max_depth_in
+  void set_max_depth(const int max_depth_in);
+
   // EFFECTS:  Render world to standard terminal
   void render(const Hittable &world);
 
@@ -31,6 +36,7 @@ class Camera {
   double aspect_ratio;
   int image_width;
   int samples_per_pixel;
+  int max_depth;
 
   int image_height;
   Point3d center;
@@ -48,7 +54,7 @@ class Camera {
   Ray sample_pixel(const int i, const int j) const;
 
   // EFFECTS:  Return color of ray
-  Color ray_color(const Ray &ray, const Hittable &world) const;
+  Color ray_color(const Ray &ray, const int depth, const Hittable &world) const;
 };
 
 #endif

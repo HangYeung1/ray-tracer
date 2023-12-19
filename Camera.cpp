@@ -12,7 +12,8 @@
 
 // EFFECTS:  Initalize camera with default aspect ratio and image width
 Camera::Camera()
-  : aspect_ratio(1.0), image_width(100), samples_per_pixel(10) { }
+  : aspect_ratio(1.0), image_width(100), samples_per_pixel(10), 
+    max_depth(10) { }
 
 // REQUIRES: aspect_ratio_in > 0
 // MODIFIES: aspect_ratio
@@ -38,6 +39,14 @@ void Camera::set_samples_per_pixel(const int samples_per_pixel_in) {
   samples_per_pixel = samples_per_pixel_in;
 }
 
+// REQUIRES: max_depth_in > 0
+// MODIFIES: max_depth
+// EFFECTS:  Set max_depth to max_depth_in
+void Camera::set_max_depth(const int max_depth_in) {
+  assert(max_depth_in > 0);
+  max_depth = max_depth_in;
+}
+
 // EFFECTS:  Render world to terminal
 void Camera::render(const Hittable &world) {
   initalize();
@@ -51,7 +60,7 @@ void Camera::render(const Hittable &world) {
       Color pixel_color(0, 0, 0);
       for (int k = 0; k < samples_per_pixel; ++k) {
         const Ray ray = sample_pixel(i, j);
-        pixel_color += ray_color(ray, world);
+        pixel_color += ray_color(ray, max_depth, world);
       }
       write_color(std::cout, pixel_color, samples_per_pixel);
     }
@@ -105,12 +114,22 @@ void Camera::initalize() {
 }
 
 // EFFECTS:  Return color of ray
-Color Camera::ray_color(const Ray &ray, const Hittable &world) const {
+Color Camera::ray_color(const Ray &ray, const int depth, 
+                        const Hittable &world) const {
   HitRecord record;
-  if(world.hit(ray, Interval(0, std::numeric_limits<double>::infinity()), 
-              record)) {
-      return 0.5 * (record.normal + Color(1, 1, 1));
+
+  // If we've exceeded the ray bounce limit, no more light is gathered
+  if(depth <= 0) {
+    return Color(0, 0, 0);
   }
+
+  // If ray hits something, reflect it
+  if(world.hit(ray, Interval(0.001, std::numeric_limits<double>::infinity()), 
+              record)) {
+      Vector3d direction = record.normal + random_unit_vector();
+      return 0.5 * ray_color(Ray(record.point, direction), depth - 1, world);
+  }
+
   const Vector3d unit_direction = unit_vector(ray.direction());
   const double a = 0.5 * (unit_direction.y() + 1.0);
   return (1.0 - a) * Color(1.0, 1.0, 1.0) + a * Color(0.5, 0.7, 1.0);

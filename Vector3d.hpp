@@ -70,11 +70,17 @@ class Vector3d {
   //           Return reference to self 
   Vector3d & operator/=(double scalar);
 
+  // EFFECTS:  Return squared magnitude of vector
+  double length_squared() const;
+
   // EFFECTS:  Return magnitude of vector
   double length() const;
 
-  // EFFECTS:  Return squared magnitude of vector
-  double length_squared() const;
+  // EFFECTS:  Return random vector with elements in [0, 1)
+  static Vector3d random();
+
+  // EFFECTS:  Return random vector with elements in [min, max)
+  static Vector3d random(double min, double max);
 
  private:
   double e[3];
@@ -107,5 +113,14 @@ Vector3d cross(const Vector3d &u, const Vector3d &v);
 
 // EFFECTS:  Return unit vector of vec
 Vector3d unit_vector(const Vector3d &vec);
+
+// EFFECTS:  Return random vector in unit sphere
+Vector3d random_vector_in_unit_sphere();
+
+// EFFECTS:  Return random unit vector
+Vector3d random_unit_vector();
+
+// EFFECTS:  Return random unit vector in the hemisphere of normal
+Vector3d random_vector_on_hemisphere(const Vector3d &normal);
 
 #endif

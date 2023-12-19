@@ -4,6 +4,8 @@
 #include <cmath>
 #include <iostream>
 
+#include "Random.hpp"
+
 // EFFECTS:  Initalize vector to 0
 Vector3d::Vector3d()
   : Vector3d(0, 0, 0) { }
@@ -109,14 +111,27 @@ Vector3d & Vector3d::operator/=(double scalar) {
   return *this *= (1 / scalar);
 }
 
+// EFFECTS:  Return squared magnitude of vector
+double Vector3d::length_squared() const {
+  return pow(e[0], 2) + pow(e[1], 2) + pow(e[2], 2);
+}
+
 // EFFECTS:  Return magnitude of vector
 double Vector3d::length() const {
   return sqrt(length_squared());
 }
 
-// EFFECTS:  Return squared magnitude of vector
-double Vector3d::length_squared() const {
-  return pow(e[0], 2) + pow(e[1], 2) + pow(e[2], 2);
+// EFFECTS:  Return random vector with elements in [0, 1)
+Vector3d Vector3d::random() {
+  return Vector3d(random_double(), random_double(), random_double());
+}
+
+// EFFECTS:  Return random vector with elements in [min, max)
+Vector3d Vector3d::random(double min, double max) {
+  return Vector3d(random_double(min, max),
+                  random_double(min, max),
+                  random_double(min, max));
+
 }
 
 // EFFECTS:  Scale this element-wise by scalar
@@ -158,4 +173,24 @@ Vector3d cross(const Vector3d &u, const Vector3d &v) {
 // EFFECTS:  Return unit vector of vec
 Vector3d unit_vector(const Vector3d &vec) {
   return vec / vec.length();
+}
+
+// EFFECTS:  Return random vector in the unit sphere
+Vector3d random_vector_in_unit_sphere() {
+  Vector3d point = Vector3d::random(-1, 1);
+  while (point.length_squared() > 1) {
+    point = Vector3d::random(-1, 1);
+  }
+  return point;
+}
+
+// EFFECTS:  Return random unit vector
+Vector3d random_unit_vector() {
+  return unit_vector(random_vector_in_unit_sphere());
+}
+
+// EFFECTS:  Return random unit vector in the hemisphere of normal
+Vector3d random_vector_on_hemisphere(const Vector3d &normal) {
+  Vector3d on_unit_sphere = random_unit_vector();
+  return (dot(on_unit_sphere, normal) > 0.0) ? on_unit_sphere : -on_unit_sphere;
 }
