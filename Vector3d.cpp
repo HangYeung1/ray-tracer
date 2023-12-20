@@ -190,7 +190,7 @@ Vector3d unit_vector(const Vector3d &vec) {
 // EFFECTS:  Return random vector in the unit sphere
 Vector3d random_vector_in_unit_sphere() {
   Vector3d point = Vector3d::random(-1, 1);
-  while (point.length_squared() > 1) {
+  while (point.length_squared() >= 1) {
     point = Vector3d::random(-1, 1);
   }
   return point;
@@ -205,4 +205,9 @@ Vector3d random_unit_vector() {
 Vector3d random_vector_on_hemisphere(const Vector3d &normal) {
   Vector3d on_unit_sphere = random_unit_vector();
   return (dot(on_unit_sphere, normal) > 0.0) ? on_unit_sphere : -on_unit_sphere;
+}
+
+// EFFECTS:  Reflect vector about normal
+Vector3d reflect(const Vector3d &vec, const Vector3d &normal) {
+  return vec - 2 * dot(vec, normal) * normal;
 }

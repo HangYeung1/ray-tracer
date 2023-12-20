@@ -26,4 +26,18 @@ class Lambertian : public Material {
   Color albedo;
 };
 
+class Metal : public Material {
+ public:
+  // EFFECTS:  Initalize metal material to specified albedo and fuzz
+  Metal(const Color &albedo_in, const double fuzz_in);
+
+  // EFFECTS:  Return true if ray is scattered, false otherwise
+  bool scatter(const Ray &ray_in, const HitRecord &record, 
+               Color &attenuation, Ray &scattered) const override;
+
+ private:
+  Color albedo;
+  double fuzz;
+};
+
 #endif

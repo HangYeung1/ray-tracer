@@ -8,18 +8,25 @@ int main() {
   // Create world
   HittableList world;
 
-  std::shared_ptr<Material> gray_diffuse = 
-    std::make_shared<Lambertian>(Color(0.5, 0.5, 0.5));
-
+  world.add(std::make_shared<Sphere>(
+    Point3d(-1, 0, -1), 
+    0.5, 
+    std::make_shared<Metal>(Color(0.8, 0.8, 0.8), 0.3)
+  ));
   world.add(std::make_shared<Sphere>(
     Point3d(0, 0, -1), 
     0.5, 
-    gray_diffuse
+    std::make_shared<Lambertian>(Color(0.7, 0.3, 0.3))
+  ));
+  world.add(std::make_shared<Sphere>(
+    Point3d(1, 0, -1), 
+    0.5, 
+    std::make_shared<Metal>(Color(0.8, 0.6, 0.2), 1.0)
   ));
   world.add(std::make_shared<Sphere>(
     Point3d(0, -100.5, -1), 
     100, 
-    gray_diffuse
+    std::make_shared<Lambertian>(Color(0.8, 0.8, 0.0))
   ));
 
   // Create camera

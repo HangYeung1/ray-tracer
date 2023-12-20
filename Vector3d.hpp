@@ -130,4 +130,7 @@ Vector3d random_unit_vector();
 // EFFECTS:  Return random unit vector in the hemisphere of normal
 Vector3d random_vector_on_hemisphere(const Vector3d &normal);
 
+// EFFECTS:  Reflect vector about normal
+Vector3d reflect(const Vector3d &vec, const Vector3d &normal);
+
 #endif
