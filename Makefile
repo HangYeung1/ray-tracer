@@ -7,7 +7,7 @@ CXXFLAGS += -fsanitize=address -fsanitize=undefined -D_GLIBCXX_DEBUG\
 # Define the prequisite files
 BASIC ?= Vector3d.cpp Ray.cpp Camera.cpp
 UTILITY ?= Color.cpp Interval.cpp Random.cpp
-OBJECTS ?= Hittable.cpp HittableList.cpp Sphere.cpp
+OBJECTS ?= Hittable.cpp HittableList.cpp Material.cpp Sphere.cpp
 
 # Render image
 render: main.exe

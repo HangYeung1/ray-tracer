@@ -1,13 +1,26 @@
 #include "Camera.hpp"
 #include "HittableList.hpp"
+#include "Material.hpp"
 #include "Sphere.hpp"
 #include "Vector3d.hpp"
 
 int main() {
   // Create world
   HittableList world;
-  world.add(std::make_shared<Sphere>(Point3d(0, 0, -1), 0.5));
-  world.add(std::make_shared<Sphere>(Point3d(0, -100.5, -1), 100));
+
+  std::shared_ptr<Material> gray_diffuse = 
+    std::make_shared<Lambertian>(Color(0.5, 0.5, 0.5));
+
+  world.add(std::make_shared<Sphere>(
+    Point3d(0, 0, -1), 
+    0.5, 
+    gray_diffuse
+  ));
+  world.add(std::make_shared<Sphere>(
+    Point3d(0, -100.5, -1), 
+    100, 
+    gray_diffuse
+  ));
 
   // Create camera
   Camera camera;

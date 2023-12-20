@@ -1,14 +1,17 @@
 #include "Sphere.hpp"
 
 #include <cmath>
+#include <memory>
 
 #include "Hittable.hpp"
 #include "Interval.hpp"
+#include "Material.hpp"
 #include "Vector3d.hpp"
 
-// EFFECTS:  Initalize sphere to specified center and radius
-Sphere::Sphere(const Point3d &center_in, const double radius_in)
-  : center(center_in), radius(radius_in) { }
+// EFFECTS:  Initalize sphere to specified center, radius, and material
+Sphere::Sphere(const Point3d &center_in, const double radius_in, 
+               const std::shared_ptr<Material> &material_in)
+  : center(center_in), radius(radius_in), material(material_in) { }
 
 // EFFECTS:  Determine if ray hits this sphere within t-interval
 bool Sphere::hit(const Ray &ray, const Interval &t_interval, 
@@ -40,6 +43,7 @@ bool Sphere::hit(const Ray &ray, const Interval &t_interval,
   record.point = ray.at(record.t);
   const Vector3d outward_normal = (record.point - center) / radius;
   record.set_face_normal(ray, outward_normal);
+  record.material = material;
 
   return true;
 }

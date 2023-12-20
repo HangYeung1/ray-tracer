@@ -44,6 +44,10 @@ class Vector3d {
   //           Return new vector
   Vector3d operator*(double scalar) const;
 
+  // EFFECTS:  Scale this element-wise by elements of other
+  //           Return new vector
+  Vector3d operator*(const Vector3d &other) const;
+
   // REQUIRES: scalar != 0
   // EFFECTS:  Scale this element-wise by inverse of scalar
   //           Return new vector
@@ -75,6 +79,9 @@ class Vector3d {
 
   // EFFECTS:  Return magnitude of vector
   double length() const;
+
+  // EFFECTS:  Return true if vector is close to 0 in all dimensions
+  bool near_zero() const;
 
   // EFFECTS:  Return random vector with elements in [0, 1)
   static Vector3d random();

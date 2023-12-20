@@ -67,6 +67,12 @@ Vector3d Vector3d::operator*(double scalar) const {
   return Vector3d(e[0] * scalar, e[1] * scalar, e[2] * scalar);
 }
 
+// EFFECTS:  Scale this element-wise by elements of other
+//           Return new vector
+Vector3d Vector3d::operator*(const Vector3d &other) const {
+  return Vector3d(e[0] * other.e[0], e[1] * other.e[1], e[2] * other.e[2]);
+}
+
 // REQUIRES: scalar != 0
 // EFFECTS:  Scale this element-wise by inverse of scalar
 //           Return new vector
@@ -119,6 +125,12 @@ double Vector3d::length_squared() const {
 // EFFECTS:  Return magnitude of vector
 double Vector3d::length() const {
   return sqrt(length_squared());
+}
+
+// EFFECTS:  Return true if vector is close to 0 in all dimensions
+bool Vector3d::near_zero() const {
+  const double s = 1e-8;
+  return (fabs(e[0]) < s) && (fabs(e[1]) < s) && (fabs(e[2]) < s);
 }
 
 // EFFECTS:  Return random vector with elements in [0, 1)

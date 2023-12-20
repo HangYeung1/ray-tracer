@@ -1,8 +1,13 @@
 #ifndef HITTABLE_HPP
 #define HITTABLE_HPP
 
+#include <memory>
+
 #include "Interval.hpp"
 #include "Ray.hpp"
+
+// Forward declaration for circular dependency
+class Material;
 
 class HitRecord {
  public:
@@ -10,6 +15,7 @@ class HitRecord {
   Vector3d normal;
   double t;
   bool front_face;
+  std::shared_ptr<Material> material;
 
   // REQUIRES: outward_normal is a unit vector
   // MODIFIES: front_face, normal

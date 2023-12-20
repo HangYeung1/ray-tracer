@@ -6,6 +6,7 @@
 #include "Color.hpp"
 #include "Hittable.hpp"
 #include "Interval.hpp"
+#include "Material.hpp"
 #include "Random.hpp"
 #include "Ray.hpp"
 #include "Vector3d.hpp"
@@ -118,7 +119,7 @@ Color Camera::ray_color(const Ray &ray, const int depth,
                         const Hittable &world) const {
   HitRecord record;
 
-  // If we've exceeded the ray bounce limit, no more light is gathered
+  // If ray bounce limit reached, ray is black
   if(depth <= 0) {
     return Color(0, 0, 0);
   }
@@ -126,8 +127,12 @@ Color Camera::ray_color(const Ray &ray, const int depth,
   // If ray hits something, reflect it
   if(world.hit(ray, Interval(0.001, std::numeric_limits<double>::infinity()), 
               record)) {
-      Vector3d direction = record.normal + random_unit_vector();
-      return 0.5 * ray_color(Ray(record.point, direction), depth - 1, world);
+      Ray scattered;
+      Color attenuation;
+      if(record.material->scatter(ray, record, attenuation, scattered)) {
+        return attenuation * ray_color(scattered, depth - 1, world);
+      }
+      return Color(0, 0, 0);
   }
 
   const Vector3d unit_direction = unit_vector(ray.direction());
