@@ -19,4 +19,4 @@ main.exe: $(BASIC) $(UTILITY) $(OBJECTS) main.cpp
 
 # Remove automatically generated files
 clean :
-	rm -rvf *.exe *~ *.out *.dSYM *.stackdump
+	rm -rvf *.exe *~ *.out *.dSYM *.stackdump image.ppm

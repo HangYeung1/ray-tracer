@@ -1,35 +1,35 @@
 #include "Interval.hpp"
 
-// EFFECTS:  Initialize Interval to empty aka (inf, -inf)
+// Initialize Interval to empty aka (inf, -inf)
 Interval::Interval()
   : minimum(std::numeric_limits<double>::infinity()),
     maximum(-std::numeric_limits<double>::infinity()) { }
 
-// EFFECTS:  Initialize Interval to minimum_in, max_in
+// Initialize Interval to minimum_in, max_in
 Interval::Interval(const double minimum_in, const double maximum_in)
   : minimum(minimum_in), maximum(maximum_in) { }
 
-// EFFECTS:  Return minimum
+// Return minimum
 double Interval::min() const {
   return minimum;
 }
 
-// EFFECTS:  Return maximum
+// Return maximum
 double Interval::max() const {
   return maximum;
 }
 
-// EFFECTS:  Determine if val is within [minimum, maximum]
+// Determine if val is within [minimum, maximum]
 bool Interval::contains(const double val) const {
   return (minimum <= val) && (val <= maximum);
 }
 
-// EFFECTS:  Determine if val is within (minimum, maximum)
+// Determine if val is within (minimum, maximum)
 bool Interval::surrounds(const double val) const {
   return (minimum < val) && (val < maximum);
 }
 
-// EFFECTS:  Clamp val to [minimum, maximum]
+// Clamp val to [minimum, maximum]
 double Interval::clamp(const double val) const {
   if (val < minimum) {
     return minimum;

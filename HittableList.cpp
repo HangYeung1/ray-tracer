@@ -5,26 +5,24 @@
 
 #include "Interval.hpp"
 
-// EFFECTS:  Initalize empty HittableList
+// Initalize empty HittableList
 HittableList::HittableList() = default;
 
-// EFFECTS:  Initalize HittableList with given object
+// Initalize HittableList with given object
 HittableList::HittableList(std::shared_ptr<Hittable> object)
   : objects{object} { }
 
-// MODIFIES: objects
-// EFFECTS:  Clear all objects from HittableList
+// Clear all objects from HittableList
 void HittableList::clear() {
   objects.clear();
 }
 
-// MODIFIES: objects
-// EFFECTS:  Add given object to objects
+// Add given object to objects
 void HittableList::add(std::shared_ptr<Hittable> object) {
   objects.push_back(object);
 }
 
-// EFFECTS:  Determine if ray hits this any object within t_interval
+// Determine if ray hits this any object within t_interval
 bool HittableList::hit(const Ray &ray, const Interval &t_interval, 
                        HitRecord &record) const {
   HitRecord temp_record;

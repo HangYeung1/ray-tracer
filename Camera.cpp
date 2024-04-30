@@ -11,44 +11,36 @@
 #include "Ray.hpp"
 #include "Vector3d.hpp"
 
-// EFFECTS:  Initalize camera with default aspect ratio and image width
+// Initalize camera with default aspect ratio and image width
 Camera::Camera()
   : aspect_ratio(1.0), image_width(100), samples_per_pixel(10), 
     max_depth(10) { }
 
-// REQUIRES: aspect_ratio_in > 0
-// MODIFIES: aspect_ratio
-// EFFECTS:  Set aspect_ratio to aspect_ratio_in
+// Set aspect_ratio to aspect_ratio_in
 void Camera::set_aspect_ratio(const double aspect_ratio_in) {
   assert(aspect_ratio_in > 0);
   aspect_ratio = aspect_ratio_in;
 }
 
-// REQUIRES: image_width_in > 0
-// MODIFIES: image_width
-// EFFECTS:  Set image_width to image_width_in
+// Set image_width to image_width_in
 void Camera::set_image_width(const int image_width_in) {
   assert(image_width_in > 0);
   image_width = image_width_in;
 }
 
-// REQUIRES: samples_per_pixel_in > 0
-// MODIFIES: samples_per_pixel
-// EFFECTS:  Set samples_per_pixel to samples_per_pixel_in
+// Set samples_per_pixel to samples_per_pixel_in
 void Camera::set_samples_per_pixel(const int samples_per_pixel_in) {
   assert(samples_per_pixel_in > 0);
   samples_per_pixel = samples_per_pixel_in;
 }
 
-// REQUIRES: max_depth_in > 0
-// MODIFIES: max_depth
-// EFFECTS:  Set max_depth to max_depth_in
+// Set max_depth to max_depth_in
 void Camera::set_max_depth(const int max_depth_in) {
   assert(max_depth_in > 0);
   max_depth = max_depth_in;
 }
 
-// EFFECTS:  Render world to terminal
+// Render world to terminal
 void Camera::render(const Hittable &world) {
   initalize();
 
@@ -69,14 +61,14 @@ void Camera::render(const Hittable &world) {
   std::clog << "\rDone.                 \n";
 }
 
-// EFFECTS:  Return random offest in pixel area
+// Return random offest in pixel area
 Vector3d Camera::sample_pixel_offest() const {
   double x_offest = -0.5 + random_double();
   double y_offest = -0.5 + random_double();
   return (x_offest * pixel_delta_u) + (y_offest* pixel_delta_v);
 }
 
-// EFFECTS:  Return random ray from camera to pixel
+// Return random ray from camera to pixel
 Ray Camera::sample_pixel(const int i, const int j) const {
   const Point3d pixel_center = pixel00_location 
                              + (i * pixel_delta_u) 
@@ -85,7 +77,7 @@ Ray Camera::sample_pixel(const int i, const int j) const {
   return Ray(center, sample_point - center);
 }
 
-// EFFECTS:  Calculate camera parameters from aspect_ratio and image_width
+// Calculate camera parameters from aspect_ratio and image_width
 void Camera::initalize() {
   // Determine image dimensions
   const int temp_height = image_width / aspect_ratio;
@@ -114,7 +106,7 @@ void Camera::initalize() {
   pixel00_location = viewport_upper_left + pixel_offest;
 }
 
-// EFFECTS:  Return color of ray
+// Return color of ray
 Color Camera::ray_color(const Ray &ray, const int depth, 
                         const Hittable &world) const {
   HitRecord record;

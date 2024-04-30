@@ -5,14 +5,12 @@
 
 #include "Interval.hpp"
 
-// EFFECTS:  Convert linear color component to gamma 2 color
+// Convert linear color component to gamma 2 color
 double linear_to_gamma(double linear) {
   return std::sqrt(linear);
 }
 
-// REQUIRES: samples > 0
-// MODIFIES: os
-// EFFECTS:  Print color converted to 8 bit numbers 
+// Print color converted to 8 bit numbers 
 // EXAMPLE:  Vector3d(1, 1, 1) -> "255 255 255"
 void write_color(std::ostream &os, const Color &color, int samples) {
   double r = color.x();

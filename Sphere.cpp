@@ -8,12 +8,12 @@
 #include "Material.hpp"
 #include "Vector3d.hpp"
 
-// EFFECTS:  Initalize sphere to specified center, radius, and material
+// Initalize sphere to specified center, radius, and material
 Sphere::Sphere(const Point3d &center_in, const double radius_in, 
                const std::shared_ptr<Material> &material_in)
   : center(center_in), radius(radius_in), material(material_in) { }
 
-// EFFECTS:  Determine if ray hits this sphere within t-interval
+// Determine if ray hits this sphere within t-interval
 bool Sphere::hit(const Ray &ray, const Interval &t_interval, 
                  HitRecord &record) const {
   // Calculate discriminant of collision equation

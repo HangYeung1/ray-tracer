@@ -17,15 +17,14 @@ class HitRecord {
   bool front_face;
   std::shared_ptr<Material> material;
 
-  // REQUIRES: outward_normal is a unit vector
-  // MODIFIES: front_face, normal
-  // EFFECTS:  Set front_face and normal relative to outward_normal
+  // Set front_face and normal relative to outward_normal
+  // Outward_normal should be a unit vector
   void set_face_normal(const Ray &ray, const Vector3d &outward_normal);
 };
 
 class Hittable {
  public:
-  // EFFECTS:  Determine if ray hits this object within t_interval
+  // Determine if ray hits this object within t_interval
   virtual bool hit(const Ray &ray, const Interval &t_interval, 
                    HitRecord &record) const = 0;
 };
